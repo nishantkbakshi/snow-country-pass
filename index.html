@@ -1292,7 +1292,7 @@ dialog.film .fh button{background:none;border:1px solid rgba(255,255,255,.4);col
         <h3>Who are you?</h3>
         <div class="seg" id="whos">
           <button class="opt" data-who="curious" aria-pressed="false"><small>40 to 60</small><b>Sake curious</b><span>The story in the glass</span></button>
-          <button class="opt" data-who="winter" aria-pressed="false"><small>25 to 45</small><b>Winter guest</b><span>Back in summer this time</span></button>
+          <button class="opt" data-who="maker" aria-pressed="false"><small>25 to 45</small><b>Hands on foodie</b><span>Make it, taste it</span></button>
           <button class="opt" data-who="company" aria-pressed="false"><small>Teams</small><b>Company field</b><span>Your own label for clients</span></button>
           <button class="opt" data-who="slow" aria-pressed="false"><small>60 plus</small><b>Slow traveller</b><span>Onsen, landscapes, no rush</span></button>
         </div>
@@ -1442,7 +1442,7 @@ terr.innerHTML=TERR.map((t,i)=>{let pl='';for(let k=0;k<22;k++){const xx=14+k*27
 const flakes=$('#flakes');let fl='';for(let i=0;i<40;i++){fl+=`<circle cx="${(i*53)%600}" cy="${(i*37)%360}" r="${1.5+(i%3)}" fill="#fff" opacity=".85"><animate attributeName="cy" from="${-10-(i*13)%120}" to="370" dur="${5+(i%5)}s" repeatCount="indefinite"/></circle>`}flakes.innerHTML=fl;
 const MONTHS=[
  {m:'JANUARY',h:'Snow covers the terraces.',p:'Two to three metres of snow fall on these hills. It is the water for next summer.',fill:'#F4F7F9',pl:0,snow:1,sun:'#F7E7B5',sy:120},
- {m:'FEBRUARY',h:'Last year\'s sake is pressed.',p:'Brewers work through the cold months. Sign ups open for the new year.',fill:'#F4F7F9',pl:0,snow:1,sun:'#F7E7B5',sy:118,you:'Join the Field Share'},
+ {m:'FEBRUARY',h:'Last year\'s sake is pressed.',p:'Brewers work through the cold months. Sign up evenings run at sake bars in London, Taipei and Hong Kong.',fill:'#F4F7F9',pl:0,snow:1,sun:'#F7E7B5',sy:118,you:'Join the Field Share'},
  {m:'MARCH',h:'The snow starts to go.',p:'Snow walls along the roads, the first bare ridges on the terraces.',fill:'#E8EFF2',pl:0,snow:.6,sun:'#F4D58C',sy:100},
  {m:'APRIL',h:'Snowmelt fills the paddies.',p:'Water from the mountains runs down from terrace to terrace.',fill:'#A9C9DE',pl:0,snow:.15,sun:'#F4CB72',sy:80},
  {m:'MAY',h:'Flooded mirrors.',p:'The terraces hold water like mirrors. Seedlings are raised in the farm sheds.',fill:'#8DB6D6',pl:0,snow:0,sun:'#F4C66A',sy:70},
@@ -1453,7 +1453,7 @@ const MONTHS=[
  {m:'OCTOBER',h:'Harvest weekend.',p:'You hammer your copper cup in Tsubame, then cut your rice and hang it on the drying racks.',fill:'#BE9A5C',pl:.12,snow:0,sun:'#EFA35A',sy:76,racks:1,you:'You are here: trip two'},
  {m:'NOVEMBER',h:'Rice to the brewery.',p:'Your rice is polished and goes to the brewery. Brewing season begins.',fill:'#A88A5E',pl:.08,snow:0,sun:'#E89A5A',sy:92},
  {m:'DECEMBER',h:'The snow returns.',p:'The cycle starts again. The snow is next year\'s water.',fill:'#E9EEF1',pl:0,snow:.7,sun:'#F2DDA8',sy:112},
- {m:'FEBRUARY',h:'Your sake is ready.',p:'Collect six bottles named after your field, pour the first into the cup you made, and end with a night in Tsukioka\'s emerald onsen. Then renew.',fill:'#F4F7F9',pl:0,snow:1,sun:'#F7E7B5',sy:118,bottle:1,you:'Your field, in a glass'}];
+ {m:'FEBRUARY',h:'Your sake is ready.',p:'Six bottles named after your field arrive at your door. Pour the first into the cup you made, and renew. No winter trip needed.',fill:'#F4F7F9',pl:0,snow:1,sun:'#F7E7B5',sy:118,bottle:1,you:'Your field, in a glass'}];
 function setMonth(i){const s=MONTHS[i];$$('#terr .band-fill').forEach(b=>b.setAttribute('fill',s.fill));$$('#terr .plants').forEach(g=>g.style.transform=`scaleY(${s.pl})`);
  $('#snowcapHill').style.opacity=s.snow;$('#flakes').style.opacity=s.snow>.5?1:0;$('#racks').style.opacity=s.racks?1:0;$('#bottle').style.opacity=s.bottle?1:0;
  const sun=$('#sun');sun.setAttribute('fill',s.sun);sun.style.transform=`translateY(${s.sy-70}px)`;
@@ -1562,7 +1562,7 @@ $$('.fcard').forEach(c=>{io.observe(c);c.onclick=()=>{selField(c.dataset.k);if(m
 
 /* planner */
 const S={who:null,from:null};
-const WHO={curious:'Sake curious',winter:'Winter guest',company:'Company field',slow:'Slow traveller'};
+const WHO={curious:'Sake curious',maker:'Hands on foodie',company:'Company field',slow:'Slow traveller'};
 const FROM={
  london:{n:'London',in:'ANA, London Heathrow to Tokyo Haneda',rail:'Joetsu Shinkansen to Echigo-Yuzawa, then the Hokuhoku Line to Tokamachi, about 35 min',out:'Back to Tokyo by bullet train, or ANA from Niigata to Osaka Itami'},
  taipei:{n:'Taipei',in:'Direct flight, Taipei to Niigata',rail:'Joetsu Shinkansen from Niigata to Echigo-Yuzawa, then the Hokuhoku Line to Tokamachi',out:'Fly home direct from Niigata'},
@@ -1570,24 +1570,24 @@ const FROM={
  sydney:{n:'Sydney',in:'Fly to Tokyo',rail:'Joetsu Shinkansen to Echigo-Yuzawa, then the Hokuhoku Line to Tokamachi, about 35 min',out:'Back to Tokyo by bullet train, or ANA to Osaka Itami'}};
 const EXTRA={
  curious:{j:['16:00','Brewery visit','See where your rice will be brewed, and taste last year\'s terrace sake.'],o:['17:00','Snow room visit','Taste sake aged in a room cooled by 1,000 tonnes of snow.']},
- winter:{j:['16:00','Kiyotsu Gorge','Walk the tunnel of light through the gorge.'],o:['17:00','Harvest festival dinner','New rice, cooked over a fire with the farmers.']},
+ maker:{j:['16:00','Kiyotsu Gorge','Walk the tunnel of light through the gorge.'],o:['17:00','Harvest festival dinner','New rice, cooked over a fire with the farmers.']},
  company:{j:['16:00','Design your label','Your firm\'s name on the bottle your clients will receive.'],o:['17:00','Team harvest challenge','Who cuts and bundles the most rice, properly.']},
  slow:{j:['16:00','Onsen afternoon','A long soak, then dinner served in your room.'],o:['17:00','Terraces at dusk','A gentle walk as the light goes.']}};
 function trips(){const F=FROM[S.from],X=EXTRA[S.who],fd=FIELDS.find(x=>x.k===FSEL);const sado=FSEL==='sado';
  const rail=sado?'Joetsu Shinkansen to Niigata, then the jetfoil to Sado':F.rail;
  return[
   {tag:'June',col:'#4E7A22',t:'Planting weekend',img:IMG.terraces,legs:[F.in,rail],s:[['Day 1','Arrive at '+fd.n,'Shuttle to the village, then dinner with the farmers.'],['09:00','Plant your plot','By hand, in the water, with your host.'],['12:30','Lunch in the field','Rice balls made from last year\'s harvest.'],X.j]},
-  {tag:'October',col:'#A4501C',t:'Harvest weekend',img:IMG.hammer,legs:[F.in,'Joetsu Shinkansen to Tsubame-Sanjo for the cup, then on to Tokamachi'],s:[['Day 1','Tsubame Industrial Materials Museum','Hammer your own copper cup. About 30 minutes.'],['09:00','Harvest your plot','Cut, bundle and carry, with your host.'],['11:30','Hang it to dry','Rice goes up on the wooden drying racks.'],X.o]},
-  {tag:'February',col:'#2F5E86',t:'Your sake',img:IMG.sakeb,legs:[F.out],s:[['Any day','Collect six bottles','Named after your field, at the brewery. Pour the first into your cup.'],['Evening','Tsukioka Onsen','Emerald sulphur water, 20 minutes by train from Niigata Station.'],['Option','Tokamachi Snow Festival','Every February since 1950.'],['Renew','Keep your plot','Same field, next year.']]}]}
+  {tag:'October',col:'#A4501C',t:'Harvest weekend',img:IMG.hammer,legs:[F.in,'Joetsu Shinkansen to Tsubame-Sanjo for the cup, then on to Tokamachi'],s:[['Day 1','Tsubame Industrial Materials Museum','Hammer your own copper cup. About 30 minutes.'],['09:00','Harvest your plot','Cut, bundle and carry, with your host.'],['11:30','Hang it to dry','Rice goes up on the wooden drying racks.'],X.o,['Night','Tsukioka Onsen','Emerald sulphur water near Niigata City, then '+(S.from==='taipei'?'fly home direct.':'fly on or take the train back.')]]},
+  {tag:'February',col:'#2F5E86',t:'Your sake comes home',img:IMG.cupsake,legs:['Shipped to your door by a licensed exporter'],s:[['Arrives','Six bottles','Named after your field. Pour the first into the cup you made.'],['Renew','Keep your plot','Same field, next June. No winter trip needed.']]}]}
 function build(){const T=trips(),fd=FIELDS.find(x=>x.k===FSEL);
  const code=(fd.k.slice(0,2)+'-'+S.who.slice(0,2)+S.from.slice(0,1)).toUpperCase()+'-'+(String(100+((S.who.length*37+S.from.length*11+fd.k.length*7)%800)));
  let plot='';for(let i=0;i<16;i++)plot+=`<i style="height:${40+((i*29+S.who.length*7)%60)}%;animation-delay:${.3+i*.04}s"></i>`;
  $('#result').innerHTML=T.map(d=>`<article class="trip"><div class="dim"><img src="${d.img}" alt=""><span style="background:${d.col}">${d.tag}</span></div><div class="dbd"><h3>${esc(d.t)}</h3>${d.legs.map(l=>`<div class="legline"><svg><use href="#i-${/ANA|flight|Fly/.test(l)?'plane':'train'}"/></svg>${esc(l)}</div>`).join('')}${d.s.map(s=>`<div class="sstop"><time>${esc(s[0])}</time><div><b>${esc(s[1])}</b><p>${esc(s[2])}</p></div></div>`).join('')}</div></article>`).join('')
- +`<div class="certwrap"><div class="cert"><div class="ch"><div><small>NIIGATA FIELD SHARE · CONCEPT</small><b>${esc(fd.n)} field certificate</b></div><small style="text-align:right">PLOT ${code}</small></div><div class="cb"><div><small>Member</small><b>${esc(WHO[S.who])}</b></div><div><small>Flying from</small><b>${esc(FROM[S.from].n)}</b></div><div><small>Planting</small><b>Early June</b></div><div><small>Harvest</small><b>Early October</b></div><div><small>Your sake</small><b>February</b></div><div><small>Your cup</small><b>Tsubame copper</b></div><div class="plot" aria-hidden="true">${plot}</div><div class="hanko" aria-hidden="true">田</div></div></div></div>`
+ +`<div class="certwrap"><div class="cert"><div class="ch"><div><small>NIIGATA FIELD SHARE · CONCEPT</small><b>${esc(fd.n)} field certificate</b></div><small style="text-align:right">PLOT ${code}</small></div><div class="cb"><div><small>Member</small><b>${esc(WHO[S.who])}</b></div><div><small>Flying from</small><b>${esc(FROM[S.from].n)}</b></div><div><small>Planting</small><b>Early June</b></div><div><small>Harvest</small><b>Early October</b></div><div><small>Your sake</small><b>Home, February</b></div><div><small>Your cup</small><b>Tsubame copper</b></div><div class="plot" aria-hidden="true">${plot}</div><div class="hanko" aria-hidden="true">田</div></div></div></div>`
  +`<div class="ractions"><button class="btn dark" id="seemap"><svg><use href="#i-map"/></svg>See my year on the map</button><span style="font-size:13px;color:var(--muted);align-self:center">Screenshot your certificate to keep it. Concept only; nothing is booked. Exact weekend dates are set each January.</span></div>`;
  if(innerWidth<981)$('#result').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
  $('#seemap').onclick=()=>{document.getElementById('map').scrollIntoView({behavior:reduce?'auto':'smooth'});
-  const on=new Set([fd.k,'tokamachi','tsubame','matsunoi',S.who==='curious'?'hakkaisan':S.who==='winter'?'kiyotsu':S.who==='slow'?'matsunoyama':'niigata',S.from==='taipei'?'airport':'tokyo','yuzawa']);if(fd.k==='sado'){on.add('niigata');on.delete('tokamachi')}
+  const on=new Set([fd.k,'tokamachi','tsubame','matsunoi',S.who==='curious'?'hakkaisan':S.who==='maker'?'kiyotsu':S.who==='slow'?'matsunoyama':'niigata',S.from==='taipei'?'airport':'tokyo','yuzawa']);if(fd.k==='sado'){on.add('niigata');on.delete('tokamachi')}
   setTimeout(()=>{Object.keys(markers).forEach(k=>{const e=pinEl(k);if(e){e.classList.toggle('on',on.has(k));e.classList.toggle('dim',!on.has(k))}});
    if(map)map.flyToBounds(L.latLngBounds([...on].map(k=>P[k].ll)).pad(.2),{duration:1.4});caption(`<b>${esc(WHO[S.who])}</b> · your year is glowing on the map`);setTimeout(()=>$('#caption').classList.remove('show'),4000)},reduce?0:700)};
 }
