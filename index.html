@@ -1256,7 +1256,7 @@ dialog.film .fh button{background:none;border:1px solid rgba(255,255,255,.4);col
           <div class="get rv"><div class="ic"><svg><use href="#i-sprout"/></svg></div><h3>Your field</h3><p>75 m² for one, or 150 m² for two, named on a map. A local farmer tends it all year.</p></div>
           <div class="get rv d1"><div class="ic"><svg><use href="#i-cal"/></svg></div><h3>Plant, harvest, or both</h3><p>Pick your weekend. Each is two nights: Matsunoyama Onsen, then the ANA Crowne Plaza Niigata, with meals, a craft and an English host booked for you.</p></div>
           <div class="get rv d2"><div class="ic"><svg><use href="#i-cup"/></svg></div><h3>Your own cup</h3><p>Day two of harvest weekend: hammer a copper cup in Tsubame. It goes home with you.</p></div>
-          <div class="get rv d3"><div class="ic"><svg><use href="#i-sake"/></svg></div><h3>Your field's sake</h3><p>Six bottles from your terrace's rice, ready in February. Collect them or have them shipped.</p></div>
+          <div class="get rv d3"><div class="ic"><svg><use href="#i-sake"/></svg></div><h3>Your field's sake</h3><p>Six bottles for every 75 m² of your terrace, ready in February. Collect them or have them shipped.</p></div>
           <div class="get rv"><div class="ic"><svg><use href="#i-star"/></svg></div><h3>A 12 million year old bath</h3><p>After the field, a night at Matsunoyama Onsen. The water is seawater trapped 12 million years ago, and you feel yourself float.</p></div>
           <div class="get rv d1"><div class="ic"><svg><use href="#i-cup"/></svg></div><h3>A glass you blow</h3><p>Day two of planting weekend: blow your own glass at Tsukioka. It waits for you at harvest, or we ship it home.</p></div>
         </div>
@@ -1325,7 +1325,7 @@ dialog.film .fh button{background:none;border:1px solid rgba(255,255,255,.4);col
     <div class="eyebrow" style="color:#E8C08E">Why it stays with you</div>
     <h2 style="margin-top:14px">A memory<br>you will <em>use.</em></h2>
     <div class="steps3">
-      <div><b style="color:var(--leaf2)">OCTOBER</b><span>Hammer your copper cup in Tsubame, the day before you cut your rice.</span></div>
+      <div><b style="color:var(--leaf2)">OCTOBER</b><span>Hammer your copper cup in Tsubame, the day after you cut your rice.</span></div>
       <div><b style="color:var(--copper2)">FEBRUARY</b><span>Pour your own field's sake into it.</span></div>
       <div><b style="color:#BFD9F0">EVERY DAY</b><span>The cup on your table brings the field back to mind, until it is time to plant again.</span></div>
     </div>
@@ -1585,7 +1585,7 @@ const MONTHS=[
  {m:'OCTOBER',h:'Harvest weekend.',p:'Day one: cut your rice and hang it on the racks, then the onsen again. Day two: harvest lunch with the farmers, then hammer your own copper cup in Tsubame.',fill:'#BE9A5C',pl:.12,snow:0,sun:'#EFA35A',sy:76,racks:1,you:'You are here: trip two'},
  {m:'NOVEMBER',h:'Rice to the brewery.',p:'Your rice is polished and goes to the brewery. Brewing season begins.',fill:'#A88A5E',pl:.08,snow:0,sun:'#E89A5A',sy:92},
  {m:'DECEMBER',h:'The snow returns.',p:'The cycle starts again. The snow is next year\'s water.',fill:'#E9EEF1',pl:0,snow:.7,sun:'#F2DDA8',sy:112},
- {m:'FEBRUARY',h:'Your sake is ready.',p:'Six bottles named after your field wait for you. Collect them on any return visit, or have them shipped home at cost. Pour the first into the cup you made.',fill:'#F4F7F9',pl:0,snow:1,sun:'#F7E7B5',sy:118,bottle:1,you:'Your field, in a glass'}];
+ {m:'FEBRUARY',h:'Your sake is ready.',p:'Bottles named after your field wait for you: six for every 75 m². Collect them on any return visit, or have them shipped home at cost. Pour the first into the cup you made.',fill:'#F4F7F9',pl:0,snow:1,sun:'#F7E7B5',sy:118,bottle:1,you:'Your field, in a glass'}];
 function setMonth(i){const s=MONTHS[i];$$('#terr .band-fill').forEach(b=>b.setAttribute('fill',s.fill));$$('#terr .plants').forEach(g=>g.style.transform=`scaleY(${s.pl})`);
  $('#snowcapHill').style.opacity=s.snow;$('#flakes').style.opacity=s.snow>.5?1:0;$('#racks').style.opacity=s.racks?1:0;$('#bottle').style.opacity=s.bottle?1:0;
  const sun=$('#sun');sun.setAttribute('fill',s.sun);sun.style.transform=`translateY(${s.sy-70}px)`;
@@ -1674,8 +1674,11 @@ $('#play').onclick=async()=>{if(!map||playing)return;playing=true;$('#play').dis
   caption('<b>Echigo-Yuzawa</b> · Change for the Hokuhoku Line.');await wait(1000);
   map.flyTo(P.tokamachi.ll,11,{duration:1});await wait(1100);await along(dense(HOKU,.006),reduce?10:3000,follow);
   vehicle.setIcon(vIcon('sprout'));caption('<b>Planting weekend</b> · Your plot at Matsudai.');openPlace('matsudai',false);await wait(2800);$('#panel').classList.remove('open');
-  caption('<b>October</b> · Hammer your copper cup in Tsubame.');vehicle.setIcon(vIcon('cup'));vehicle.setLatLng(P.tsubame.ll);map.flyTo(P.tsubame.ll,10,{duration:1.3});await wait(1500);openPlace('tsubame',false);await wait(2400);$('#panel').classList.remove('open');
-  caption('<b>Harvest weekend</b> · Cut your rice, hang it to dry.');vehicle.setLatLng(P.matsudai.ll);map.flyTo(P.matsudai.ll,11,{duration:1.3});await wait(2400);
+  caption('<b>Night one</b> · The dip at Matsunoyama Onsen.');vehicle.setIcon(vIcon('star'));vehicle.setLatLng(P.matsunoyama.ll);map.flyTo(P.matsunoyama.ll,11,{duration:1.1});await wait(1300);openPlace('matsunoyama',false);await wait(2200);$('#panel').classList.remove('open');
+  caption('<b>Day two</b> · Blow your glass at Tsukioka.');vehicle.setIcon(vIcon('cup'));vehicle.setLatLng(P.tsukioka.ll);map.flyTo(P.tsukioka.ll,10,{duration:1.3});await wait(1500);openPlace('tsukioka',false);await wait(2200);$('#panel').classList.remove('open');
+  caption('<b>Night two</b> · The ANA Crowne Plaza Niigata.');vehicle.setLatLng(P.niigata.ll);map.flyTo(P.niigata.ll,11,{duration:1.1});await wait(1800);
+  caption('<b>October</b> · Harvest weekend. Cut your rice, hang it to dry.');vehicle.setIcon(vIcon('sprout'));vehicle.setLatLng(P.matsudai.ll);map.flyTo(P.matsudai.ll,11,{duration:1.3});await wait(2200);
+  caption('<b>Day two</b> · Hammer your copper cup in Tsubame.');vehicle.setIcon(vIcon('cup'));vehicle.setLatLng(P.tsubame.ll);map.flyTo(P.tsubame.ll,10,{duration:1.3});await wait(1500);openPlace('tsubame',false);await wait(2200);$('#panel').classList.remove('open');
   caption('<b>February</b> · Your sake is ready at the brewery.');vehicle.setIcon(vIcon('sake'));vehicle.setLatLng(P.matsunoi.ll);map.flyTo(P.matsunoi.ll,11,{duration:1.1});await wait(1300);openPlace('matsunoi',false);await wait(2400);$('#panel').classList.remove('open');
   caption('<b>Onward</b> · ANA from Niigata to Osaka Itami.');vehicle.setIcon(vIcon('plane'));vehicle.setLatLng(P.airport.ll);map.flyToBounds(L.latLngBounds(FLIGHT).pad(.25),{duration:1.3});await wait(1400);
   await along(FLIGHT,reduce?10:3200);await wait(1200);
