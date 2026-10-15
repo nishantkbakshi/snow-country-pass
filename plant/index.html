@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Plant Your Row</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#10221A;--bg2:#17301F;--ink:#F5F1E6;--muted:#B9C8BD;--leaf:#A9CF7A;--leaf2:#6E9F3A;--cop:#E8A06A;--red:#C2412D;--card:#F7F2E4;--cardink:#17241C;--line:rgba(245,241,230,.18);
+--serif:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",Georgia,serif;--sans:"Zen Kaku Gothic New","Hiragino Sans","Helvetica Neue",Arial,sans-serif}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#F3EEDF;--bg2:#E9E2CD;--ink:#17241C;--muted:#4B5A50;--line:rgba(23,36,28,.15);--leaf:#4E7A22;--cop:#A4501C}}
+:root[data-theme="light"]{--bg:#F3EEDF;--bg2:#E9E2CD;--ink:#17241C;--muted:#4B5A50;--line:rgba(23,36,28,.15);--leaf:#4E7A22;--cop:#A4501C}
+:root[data-theme="dark"]{--bg:#10221A;--bg2:#17301F;--ink:#F5F1E6;--muted:#B9C8BD;--line:rgba(245,241,230,.18);--leaf:#A9CF7A;--cop:#E8A06A}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer}
+.eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--cop);font-weight:700}
+.hidden{display:none!important}
+.theme{position:fixed;top:12px;right:12px;z-index:50;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:18px}
+
+/* ---------------- PHONE ---------------- */
+#phone{max-width:480px;margin:0 auto;padding:22px 18px 40px;min-height:100svh;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.2em;color:var(--muted);font-weight:700}
+.brand svg{width:26px;height:26px}
+h1{font-family:var(--serif);font-weight:800;font-size:38px;line-height:1.08;margin:22px 0 6px}
+h1 em{font-style:normal;color:var(--leaf)}
+.lede{color:var(--muted);font-size:16px;line-height:1.5}
+.name{margin:18px 0 6px;display:flex;flex-direction:column;gap:6px}
+.name label{font-size:13px;color:var(--muted)}
+.name input{font:inherit;font-size:18px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);outline:none}
+.name input:focus{border-color:var(--leaf)}
+.stage{position:relative;margin-top:14px;flex:1;min-height:340px;border-radius:22px;overflow:hidden;background:linear-gradient(#2B4A33 0%,#1B3324 55%,#3E6A7A 55.2%,#2C5361 100%);touch-action:none;user-select:none}
+.stage .hint{position:absolute;left:0;right:0;top:16px;text-align:center;color:#E9F0E6;font-size:14px;letter-spacing:.04em}
+.stage .water{position:absolute;left:0;right:0;bottom:0;height:45%;background:repeating-linear-gradient(180deg,rgba(255,255,255,.06) 0 2px,transparent 2px 14px)}
+.stage .rows{position:absolute;left:0;right:0;bottom:12%;height:22%;opacity:.55}
+.seed{position:absolute;left:50%;top:22%;width:96px;height:140px;margin-left:-48px;cursor:grab;transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.seed.drag{transition:none;cursor:grabbing}
+.seed.down{transition:transform .45s cubic-bezier(.5,0,.75,0)}
+.seed svg{width:100%;height:100%;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.arrow{position:absolute;left:50%;top:62%;transform:translateX(-50%);color:#E9F0E6;opacity:.8;font-size:26px;animation:bob 1.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(-50%,8px)}}
+.ripple{position:absolute;border:2px solid rgba(255,255,255,.8);border-radius:50%;width:20px;height:8px;transform:translate(-50%,-50%);animation:rip 1s ease-out forwards;pointer-events:none}
+@keyframes rip{to{width:220px;height:60px;opacity:0}}
+.plantbtn{margin-top:14px;width:100%;padding:16px;border:0;border-radius:999px;background:var(--leaf2);color:#fff;font-weight:700;font-size:17px}
+.status{margin-top:10px;font-size:13px;color:var(--muted);text-align:center;min-height:18px}
+
+/* passport */
+#passport{animation:rise .6s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+.pp{background:var(--card);color:var(--cardink);border-radius:20px;padding:22px 20px;margin-top:18px;box-shadow:0 18px 40px rgba(0,0,0,.35);position:relative;overflow:hidden}
+.pp:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(23,36,28,.025) 0 2px,transparent 2px 9px);pointer-events:none}
+.pp .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.pp .t1{font-size:11px;letter-spacing:.22em;font-weight:700;color:#7A5A3A}
+.pp h2{font-family:var(--serif);font-size:28px;line-height:1.1;margin-top:6px}
+.pp .who{font-size:14px;color:#4B5A50;margin-top:6px}
+.pp .jp{font-family:var(--serif);font-size:30px;color:#A4501C;writing-mode:vertical-rl;line-height:1}
+.stamps{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.st{aspect-ratio:1;border-radius:50%;border:2px dashed rgba(23,36,28,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;position:relative}
+.st b{font-family:var(--serif);font-size:19px;line-height:1.1}
+.st span{font-size:11px;line-height:1.35;color:#5B6A60;margin-top:4px}
+.st.on{border:3px solid var(--red);color:var(--red);transform:rotate(-8deg);animation:stamp .5s cubic-bezier(.2,1.6,.4,1) both .2s}
+.st.on span{color:var(--red)}
+.st.on:after{content:"";position:absolute;inset:6px;border-radius:50%;border:1px solid var(--red);opacity:.7}
+@keyframes stamp{from{transform:scale(2.2) rotate(-20deg);opacity:0}}
+.st.lock{background:rgba(23,36,28,.04)}
+.st .cd{font-family:var(--serif);font-size:26px;color:#17241C;margin-top:2px}
+.ppnote{margin-top:16px;font-family:var(--serif);font-size:18px;line-height:1.35}
+.ppnote i{font-style:normal;color:#A4501C}
+.after{margin-top:18px;text-align:center}
+.after .sig{font-family:var(--serif);font-size:20px}
+.after .sig i{font-style:normal;color:var(--cop)}
+.after a,.after button{display:inline-block;margin-top:12px;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:10px 16px;background:transparent;text-decoration:none;font-size:14px}
+.fine{margin-top:14px;font-size:11px;color:var(--muted);text-align:center;line-height:1.5}
+
+/* ---------------- SCREEN ---------------- */
+#screen{position:fixed;inset:0;background:#0B1712;color:#F5F1E6;display:grid;grid-template-columns:34vw 1fr;overflow:hidden}
+#screen .left{padding:5vh 3vw;display:flex;flex-direction:column;gap:2.2vh;z-index:2;background:linear-gradient(90deg,#0B1712 75%,rgba(11,23,18,0))}
+#screen .eyebrow{font-size:1.1vw;color:#E8A06A}
+#screen h1{font-size:4.6vw;margin:0;color:#F5F1E6}
+#screen h1 em{color:#A9CF7A}
+#screen .sub{font-size:1.35vw;color:#C9D6CC;line-height:1.45}
+.qr{background:#FAF6EC;border-radius:1.2vw;padding:1vw;width:15vw;aspect-ratio:1}
+.qr img{width:100%;height:100%;display:block}
+.url{font-size:1vw;color:#B9C8BD;letter-spacing:.02em}
+.count{font-family:var(--serif);font-size:5.5vw;line-height:1;color:#A9CF7A;transition:transform .3s}.count.pop{transform:scale(1.12)}
+.count small{display:block;font-family:var(--sans);font-size:1.1vw;color:#B9C8BD;letter-spacing:.18em;text-transform:uppercase;margin-top:.6vh}
+.ticker{font-size:1.2vw;color:#E8A06A;min-height:3vh}
+.field{position:relative;overflow:hidden}
+.field .bg{position:absolute;inset:0;background:url(terrace.jpg) center/cover;filter:brightness(.55) saturate(.7);transition:filter 4s ease}
+.field.green .bg{filter:brightness(.95) saturate(1.45) hue-rotate(-10deg)}
+.field svg{position:absolute;inset:0;width:100%;height:100%}
+.lbl{font-family:var(--sans);font-size:15px;fill:#FAF6EC;paint-order:stroke;stroke:rgba(0,0,0,.55);stroke-width:3px;animation:lbl 3.2s ease-out forwards}
+@keyframes lbl{0%{opacity:0;transform:translateY(0)}12%{opacity:1}70%{opacity:1}100%{opacity:0;transform:translateY(-28px)}}
+.sd{transform-box:fill-box;transform-origin:50% 100%;animation:grow 1.1s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes grow{from{transform:scale(.1);opacity:0}}
+.rp{fill:none;stroke:#fff;stroke-width:3;animation:rp 1.3s ease-out forwards}
+@keyframes rp{from{r:6;opacity:.95}to{r:110;opacity:0}}
+.finale{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;justify-content:center;padding:0 7vw;background:linear-gradient(90deg,rgba(8,18,13,.97) 0%,rgba(8,18,13,.88) 34%,rgba(8,18,13,.35) 58%,rgba(8,18,13,0) 75%);opacity:0;pointer-events:none;transition:opacity 2s ease}
+.finale.on{opacity:1}#screen .left{transition:opacity 1.5s}#screen.fin .left{opacity:0}
+.finale .big{font-family:var(--serif);font-weight:800;font-size:5vw;line-height:1.08;max-width:60vw}
+.finale .big em{font-style:normal;color:#A9CF7A}
+.finale .mid{font-family:var(--serif);font-size:2.4vw;margin-top:3vh;color:#E9E1CF;max-width:60vw}
+.finale .sig{font-family:var(--serif);font-size:2.2vw;margin-top:5vh}
+.finale .sig i{font-style:normal;color:#E8A06A}
+.conn{position:absolute;right:1.2vw;bottom:1.2vh;z-index:6;font-size:.8vw;color:rgba(255,255,255,.5);display:flex;gap:.8vw;align-items:center}
+.conn i{display:inline-block;width:.6vw;height:.6vw;border-radius:50%;background:#C2412D;margin-right:.3vw}
+.conn i.ok{background:#7BC96F}
+.help{position:absolute;left:1.2vw;bottom:1.2vh;z-index:6;font-size:.8vw;color:rgba(255,255,255,.35)}
+</style>
+</head>
+<body>
+<button class="theme" id="theme" aria-label="Switch light or dark mode">◐</button>
+
+<!-- PHONE -->
+<main id="phone" class="hidden">
+  <div class="brand"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="24" cy="24" r="21"/><path d="M24 6v36M8 18h32M8 30h32"/></svg>NIIGATA FIELD SHARE</div>
+
+  <section id="plantView">
+    <p class="eyebrow" style="margin-top:22px">Most people see Japan. A few grow it.</p>
+    <h1>Plant your <em>row.</em></h1>
+    <p class="lede">Swipe the seedling down into the water. Your row appears on the big screen, on a terrace in Matsudai, Niigata.</p>
+    <div class="name"><label for="nm">Your first name, for the screen (optional)</label><input id="nm" maxlength="14" autocomplete="given-name" placeholder="e.g. Hana"></div>
+    <div class="stage" id="stage">
+      <div class="hint">Swipe down to plant</div>
+      <svg class="rows" viewBox="0 0 400 60" preserveAspectRatio="none"><g stroke="#B7D98C" stroke-width="2" stroke-linecap="round">
+        <path d="M20 50v-14M24 50l4-12M16 50l-4-11M70 50v-14M74 50l4-12M66 50l-4-11M120 50v-14M124 50l4-12M116 50l-4-11M170 50v-14M174 50l4-12M166 50l-4-11M230 50v-14M234 50l4-12M226 50l-4-11M280 50v-14M284 50l4-12M276 50l-4-11M330 50v-14M334 50l4-12M326 50l-4-11M380 50v-14M384 50l4-12M376 50l-4-11"/></g></svg>
+      <div class="water"></div>
+      <div class="arrow">↓</div>
+      <div class="seed" id="seed"><svg viewBox="0 0 96 140"><g stroke-linecap="round" fill="none">
+        <path d="M48 128 C47 100 46 70 44 34" stroke="#8CC152" stroke-width="5"/>
+        <path d="M48 120 C55 92 64 66 80 40" stroke="#A9CF7A" stroke-width="4.5"/>
+        <path d="M47 118 C38 92 28 70 14 50" stroke="#7CB342" stroke-width="4.5"/>
+        <path d="M48 110 C52 80 58 50 62 18" stroke="#B7D98C" stroke-width="4"/>
+        <path d="M47 112 C42 86 36 58 30 26" stroke="#94C95B" stroke-width="4"/></g>
+        <path d="M34 124 C40 134 56 134 62 124 C58 128 38 128 34 124Z" fill="#6B4B2A"/>
+        <ellipse cx="48" cy="126" rx="15" ry="7" fill="#7A5634"/></svg></div>
+    </div>
+    <button class="plantbtn" id="plantBtn">Plant it</button>
+    <p class="status" id="status"></p>
+  </section>
+
+  <section id="passport" class="hidden">
+    <p class="eyebrow" style="margin-top:22px">Planted. Look up at the screen.</p>
+    <div class="pp" id="pp">
+      <div class="top"><div><div class="t1">FIELD PASSPORT</div><h2>Grow your own Japan</h2><div class="who" id="ppWho"></div></div><div class="jp">田んぼ</div></div>
+      <div class="stamps">
+        <div class="st on"><b>Planted</b><span id="ppDate"></span><span id="ppRow"></span></div>
+        <div class="st"><b>Dipped</b><span>Matsunoyama Onsen<br>a 12 million year old sea</span></div>
+        <div class="st"><b>Hammered</b><span>Your copper cup<br>Tsubame, at harvest</span></div>
+        <div class="st lock"><b>Poured</b><div class="cd" id="ppDays"></div><span>days until February,<br>when your rice comes home as sake</span></div>
+      </div>
+      <p class="ppnote">One stamp today. The last one only arrives in February. <i>That is the reason to come back.</i></p>
+    </div>
+    <div class="after">
+      <div class="sig">Niigata. <i>It grows on you.</i></div>
+      <button id="savePP">Save my passport</button>
+      <br><a href="https://nishantkbakshi.github.io/snow-country-pass/">See the Niigata Field Share</a>
+    </div>
+    <p class="fine">Matsudai terraces, Tokamachi, Niigata · 37.14° N 138.62° E<br>A student competition concept for the LBS Visit Japan Competition 2026. Your first name is shown on the shared screen only and is not stored by us.</p>
+  </section>
+</main>
+
+<!-- SCREEN -->
+<div id="screen" class="hidden">
+  <div class="left">
+    <p class="eyebrow">Grow your own Japan · live</p>
+    <h1>Plant your <em>row.</em></h1>
+    <p class="sub">Scan, swipe the seedling into the water, and your row appears on this terrace in Matsudai, Niigata.</p>
+    <div class="qr"><img src="qr.png" alt="QR code to plant your row"></div>
+    <p class="url">nishantkbakshi.github.io/snow-country-pass/plant</p>
+    <div class="count" id="count">0<small>rows planted</small></div>
+    <div class="ticker" id="ticker"></div>
+  </div>
+  <div class="field" id="field"><div class="bg"></div><svg id="svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice"></svg></div>
+  <div class="finale" id="finale">
+    <div class="big" id="finBig">You just planted a terrace in <em>Matsudai.</em></div>
+    <div class="mid">In June 2027, a farmer will plant this one for real.</div>
+    <div class="sig">Grow your own Japan. Niigata. <i>It grows on you.</i></div>
+  </div>
+  <div class="conn" id="conn"></div>
+  <div class="help hidden" id="help">F finale · R reset · D test row · H hide</div>
+</div>
+
+<script src="mqtt.min.js"></script>
+<script>
+(function(){
+"use strict";
+var q=new URLSearchParams(location.search);
+var SCREEN=q.has("screen");
+var BASE="gyoj/m7q2x9niigata/";
+var BROKERS=q.get("broker")?q.get("broker").split(","):["wss://broker.hivemq.com:8884/mqtt","wss://broker.emqx.io:8084/mqtt"];
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
+// theme
+var th=document.getElementById("theme");
+var saved=ls("gyoj-theme");if(saved)document.documentElement.setAttribute("data-theme",saved);
+th.onclick=function(){var cur=document.documentElement.getAttribute("data-theme");var dark=cur?cur==="dark":!matchMedia("(prefers-color-scheme: light)").matches;var nx=dark?"light":"dark";document.documentElement.setAttribute("data-theme",nx);ls("gyoj-theme",nx)};
+if(SCREEN)th.classList.add("hidden");
+
+// transport: several public MQTT brokers + BroadcastChannel (same device tests)
+var clients=[],handlers={},seen={};
+var bc=null;try{bc=new BroadcastChannel("gyoj")}catch(e){}
+function deliver(topic,obj){(handlers[topic]||[]).forEach(function(f){f(obj)})}
+function on(topic,f){(handlers[topic]=handlers[topic]||[]).push(f)}
+function rid(){return Math.random().toString(36).slice(2,10)+Date.now().toString(36)}
+function connStatus(){var el=document.getElementById(SCREEN?"conn":"status");if(!SCREEN)return;el.innerHTML=clients.map(function(c,i){return '<span><i class="'+(c.connected?"ok":"")+'"></i>link '+(i+1)+'</span>'}).join("")}
+if(window.mqtt){BROKERS.forEach(function(url){try{
+  var c=mqtt.connect(url,{clientId:"gyoj_"+rid(),reconnectPeriod:2000,connectTimeout:8000,clean:true});
+  c.on("connect",function(){c.subscribe(BASE+"#",{qos:1});connStatus();flush()});
+  c.on("close",connStatus);c.on("offline",connStatus);c.on("error",function(){});
+  c.on("message",function(t,m){var o;try{o=JSON.parse(m.toString())}catch(e){return}
+    var key=t+"|"+(o.id||o.sid||"")+"|"+(o.n||"");
+    if(t!==BASE+"state"){if(seen[key])return;seen[key]=1}
+    deliver(t.slice(BASE.length),o)});
+  clients.push(c)}catch(e){}})}
+if(bc)bc.onmessage=function(ev){var d=ev.data;if(!d||!d.t)return;var key=d.t+"|"+(d.o.id||d.o.sid||"")+"|"+(d.o.n||"");if(d.t!=="state"){if(seen[key])return;seen[key]=1}deliver(d.t,d.o)};
+var queue=[];
+function send(topic,obj,retain){var ok=false;clients.forEach(function(c){if(c.connected){c.publish(BASE+topic,JSON.stringify(obj),{qos:1,retain:!!retain});ok=true}});if(bc){try{bc.postMessage({t:topic,o:obj})}catch(e){}}return ok||!!bc}
+function sendSure(topic,obj,retain){queue.push([topic,obj,retain]);flush()}
+function flush(){var any=clients.some(function(c){return c.connected});if(!any&&!bc)return;while(queue.length){var x=queue.shift();send(x[0],x[1],x[2])}}
+setInterval(connStatus,2000);
+
+if(SCREEN)initScreen();else initPhone();
+
+/* ================= PHONE ================= */
+function initPhone(){
+  document.getElementById("phone").classList.remove("hidden");
+  var st={sid:null,rows:[]};
+  var me=JSON.parse(ls("gyoj-me")||"null");
+  var nm=document.getElementById("nm");nm.value=ls("gyoj-name")||"";
+  on("state",function(o){st=o||st;if(me&&o&&o.reset&&o.sid!==me.sid){me=null;ls("gyoj-me",null);location.reload()}updRow()});
+  function updRow(){if(!me)return;var r=-1;(st.rows||[]).forEach(function(x,i){if(x.id===me.id)r=i});
+    document.getElementById("ppRow").textContent=r>=0?"Row "+(r+1):"Row on the screen"}
+  function show(planted){document.getElementById("plantView").classList.toggle("hidden",planted);document.getElementById("passport").classList.toggle("hidden",!planted);
+    if(planted){var d=new Date(me.ts);document.getElementById("ppDate").textContent=d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
+      document.getElementById("ppWho").textContent=(me.n?me.n+" · ":"")+"Matsudai, Niigata";
+      var now=new Date(),y=now.getMonth()>=1?now.getFullYear()+1:now.getFullYear();var feb=new Date(y,1,1);
+      document.getElementById("ppDays").textContent=Math.max(0,Math.ceil((feb-now)/864e5));updRow()}}
+  if(me)show(true);
+  var seed=document.getElementById("seed"),stage=document.getElementById("stage"),done=false,y0=null,dy=0;
+  function plant(){if(done)return;done=true;
+    var n=(nm.value||"").replace(/[<>&"]/g,"").trim().slice(0,14);ls("gyoj-name",n);
+    seed.classList.add("down");seed.style.transform="translateY("+(stage.clientHeight*0.42)+"px)";
+    setTimeout(function(){var r=document.createElement("div");r.className="ripple";r.style.left="50%";r.style.top=(stage.clientHeight*0.22+140+stage.clientHeight*0.42-10)+"px";stage.appendChild(r);try{navigator.vibrate&&navigator.vibrate(40)}catch(e){}},420);
+    me={id:rid(),n:n,ts:Date.now(),sid:st.sid||null};ls("gyoj-me",JSON.stringify(me));
+    document.getElementById("status").textContent="Planting…";
+    sendSure("plant",{id:me.id,n:me.n,ts:me.ts});
+    setTimeout(function(){show(true)},1300)}
+  document.getElementById("plantBtn").onclick=plant;
+  seed.addEventListener("pointerdown",function(e){y0=e.clientY;dy=0;seed.classList.add("drag");seed.setPointerCapture(e.pointerId)});
+  seed.addEventListener("pointermove",function(e){if(y0===null)return;dy=Math.max(0,e.clientY-y0);seed.style.transform="translateY("+dy+"px)"});
+  function end(){if(y0===null)return;y0=null;seed.classList.remove("drag");if(dy>stage.clientHeight*0.18)plant();else seed.style.transform=""}
+  seed.addEventListener("pointerup",end);seed.addEventListener("pointercancel",end);
+  document.getElementById("savePP").onclick=savePassport;
+  function savePassport(){var W=1080,H=1500,c=document.createElement("canvas");c.width=W;c.height=H;var g=c.getContext("2d");
+    g.fillStyle="#F7F2E4";g.fillRect(0,0,W,H);g.fillStyle="#7A5A3A";g.font="700 30px sans-serif";g.fillText("FIELD PASSPORT · NIIGATA FIELD SHARE",80,120);
+    g.fillStyle="#17241C";g.font="800 76px Georgia,serif";g.fillText("Grow your own Japan",80,220);
+    g.font="36px sans-serif";g.fillStyle="#4B5A50";g.fillText((me.n?me.n+" · ":"")+"Matsudai, Niigata · 37.14° N 138.62° E",80,290);
+    var pos=[[300,560],[780,560],[300,1000],[780,1000]],lab=[["Planted",document.getElementById("ppDate").textContent,document.getElementById("ppRow").textContent],["Dipped","Matsunoyama Onsen",""],["Hammered","Tsubame copper cup",""],["Poured","February",document.getElementById("ppDays").textContent+" days to go"]];
+    pos.forEach(function(p,i){g.save();g.translate(p[0],p[1]);if(i===0)g.rotate(-0.14);g.lineWidth=i===0?7:3;g.strokeStyle=i===0?"#C2412D":"rgba(23,36,28,.3)";if(i>0)g.setLineDash([12,10]);g.beginPath();g.arc(0,0,190,0,7);g.stroke();g.setLineDash([]);
+      g.fillStyle=i===0?"#C2412D":"#17241C";g.textAlign="center";g.font="700 50px Georgia,serif";g.fillText(lab[i][0],0,-6);g.font="28px sans-serif";g.fillStyle=i===0?"#C2412D":"#5B6A60";g.fillText(lab[i][1],0,42);g.fillText(lab[i][2],0,80);g.restore()});
+    g.fillStyle="#17241C";g.font="40px Georgia,serif";g.fillText("One stamp today. The last one arrives in February.",80,1330);g.fillStyle="#A4501C";g.fillText("Niigata. It grows on you.",80,1400);
+    c.toBlob(function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="Niigata_Field_Passport.png";document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},2000)},"image/png")}
+}
+
+/* ================= SCREEN ================= */
+function initScreen(){
+  document.getElementById("screen").classList.remove("hidden");
+  var svg=document.getElementById("svg"),NS="http://www.w3.org/2000/svg";
+  var TARGET=parseInt(q.get("target")||"0",10);
+  // five terrace bands as gentle curves, front band largest
+  var bands=[{y:500,a:-30,amp:14,s:.5},{y:590,a:-15,amp:18,s:.62},{y:690,a:0,amp:22,s:.76},{y:800,a:15,amp:26,s:.9},{y:925,a:30,amp:28,s:1.05}];
+  var slots=[];bands.forEach(function(b,bi){var n=10+bi*2;for(var i=0;i<n;i++){var x=60+(880*(i+0.5)/n)+((bi%2)?18:0);var y=b.y+b.amp*Math.sin((x/1000)*Math.PI*1.4+bi)+b.a*((x-500)/500)*0.3;slots.push({x:x,y:y,s:b.s})}});
+  // order: fill middle bands first, spread across
+  slots.sort(function(a,b){return ((a.x*7+a.y*13)%97)-((b.x*7+b.y*13)%97)});
+  svg.innerHTML='<defs><radialGradient id="glow"><stop offset="0" stop-color="rgba(190,240,130,.55)"/><stop offset="1" stop-color="rgba(190,240,130,0)"/></radialGradient></defs>';var gWater=document.createElementNS(NS,"g"),gPl=document.createElementNS(NS,"g"),gLb=document.createElementNS(NS,"g");svg.appendChild(gWater);svg.appendChild(gPl);svg.appendChild(gLb);
+  bands.forEach(function(b){var p=document.createElementNS(NS,"path");var d="M0 "+(b.y+30);for(var x=0;x<=1000;x+=50){var y=b.y+b.amp*Math.sin((x/1000)*Math.PI*1.4)+b.a*((x-500)/500)*0.3+30;d+=" L"+x+" "+y}p.setAttribute("d",d);p.setAttribute("stroke","rgba(255,255,255,.18)");p.setAttribute("stroke-width","2");p.setAttribute("fill","none");gWater.appendChild(p)});
+  var state={sid:rid(),rows:[]},ids={};
+  function seedEl(x,y,s,extra){var g=document.createElementNS(NS,"g");g.setAttribute("transform","translate("+x+" "+y+") scale("+(s*2.3)+")");
+    var inner=document.createElementNS(NS,"g");inner.setAttribute("class","sd");
+    inner.innerHTML='<ellipse cx="0" cy="-18" rx="26" ry="26" fill="url(#glow)"/><g stroke-linecap="round" fill="none" style="filter:drop-shadow(0 0 2px rgba(0,0,0,.6))"><path d="M0 0 C-1 -14 -2 -26 -4 -40" stroke="#8CC152" stroke-width="3"/><path d="M0 0 C4 -12 9 -22 18 -32" stroke="#A9CF7A" stroke-width="3"/><path d="M0 0 C-5 -11 -10 -20 -18 -28" stroke="#7CB342" stroke-width="3"/><path d="M0 -2 C2 -16 4 -30 6 -46" stroke="#B7D98C" stroke-width="2.6"/><path d="M-12 0 C-13 -8 -14 -16 -16 -24" stroke="#94C95B" stroke-width="2.4"/><path d="M12 0 C13 -9 15 -17 17 -26" stroke="#94C95B" stroke-width="2.4"/></g><ellipse cx="0" cy="1" rx="18" ry="5" fill="rgba(255,255,255,.22)"/>';
+    g.appendChild(inner);return g}
+  function addPlant(o,quiet){if(!o||!o.id||ids[o.id])return;ids[o.id]=1;var n=(o.n||"").replace(/[<>&"]/g,"").slice(0,14);
+    state.rows.push({id:o.id,n:n});var i=state.rows.length-1;var sl=slots[i%slots.length];var jx=i>=slots.length?((i*37)%30-15):0,jy=i>=slots.length?((i*53)%16-8):0;
+    var x=sl.x+jx,y=sl.y+jy;gPl.appendChild(seedEl(x,y,sl.s));
+    if(!quiet){var r=document.createElementNS(NS,"circle");r.setAttribute("cx",x);r.setAttribute("cy",y);r.setAttribute("class","rp");gLb.appendChild(r);setTimeout(function(){r.remove()},1400);
+      if(n){var t=document.createElementNS(NS,"text");t.setAttribute("x",x);t.setAttribute("y",y-120*sl.s);t.setAttribute("text-anchor","middle");t.setAttribute("class","lbl");t.style.fontSize=(26*sl.s+8)+"px";t.textContent=n;gLb.appendChild(t);setTimeout(function(){t.remove()},3300)}}
+    document.getElementById("count").firstChild.nodeValue=String(state.rows.length);var ce=document.getElementById("count");ce.classList.add("pop");setTimeout(function(){ce.classList.remove("pop")},300);
+    var names=state.rows.filter(function(r){return r.n}).slice(-4).map(function(r){return r.n});document.getElementById("ticker").textContent=names.length?"Just planted: "+names.join(" · "):"";
+    pub();if(TARGET&&state.rows.length>=TARGET)setTimeout(finale,1500)}
+  var pubT=null;function pub(){clearTimeout(pubT);pubT=setTimeout(function(){send("state",{sid:state.sid,rows:state.rows.slice(-400)},true)},300)}
+  function reset(){state={sid:rid(),rows:[]};ids={};gPl.innerHTML="";gLb.innerHTML="";document.getElementById("count").firstChild.nodeValue="0";document.getElementById("ticker").textContent="";document.getElementById("finale").classList.remove("on");document.getElementById("screen").classList.remove("fin");document.getElementById("field").classList.remove("green");send("state",{sid:state.sid,rows:[],reset:true},true)}
+  function finale(){var n=state.rows.length;document.getElementById("finBig").innerHTML=(n?n+" of you just planted":"You just planted")+" a terrace in <em>Matsudai.</em>";document.getElementById("field").classList.add("green");document.getElementById("finale").classList.add("on");document.getElementById("screen").classList.add("fin")}
+  on("plant",function(o){addPlant(o)});
+  var startT=setInterval(function(){if(clients.some(function(c){return c.connected})){clearInterval(startT);send("state",{sid:state.sid,rows:[]},true)}},500);
+  document.addEventListener("keydown",function(e){var k=e.key.toLowerCase();
+    if(k==="f")finale();else if(k==="r")reset();else if(k==="d")addPlant({id:rid(),n:""});else if(k==="h"){document.getElementById("help").classList.toggle("hidden");document.getElementById("conn").classList.toggle("hidden")}
+    else if(k==="escape"){document.getElementById("finale").classList.remove("on");document.getElementById("screen").classList.remove("fin");document.getElementById("field").classList.remove("green")}});
+  window.__screen={addPlant:addPlant,finale:finale,reset:reset,state:function(){return state}};
+}
+})();
+</script>
+</body>
+</html>
