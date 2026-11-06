@@ -118,7 +118,7 @@ h1 em{font-style:normal;color:var(--leaf)}
 
 <!-- PHONE -->
 <main id="phone" class="hidden">
-  <div class="brand"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="24" cy="24" r="21"/><path d="M24 6v36M8 18h32M8 30h32"/></svg>NIIGATA FIELD SHARE</div>
+  <div class="brand"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="24" cy="24" r="21"/><path d="M24 6v36M8 18h32M8 30h32"/></svg>NIIGATA FURUSATO</div>
 
   <section id="plantView">
     <p class="eyebrow" style="margin-top:22px">Most people see Japan. A few grow it.</p>
@@ -151,15 +151,15 @@ h1 em{font-style:normal;color:var(--leaf)}
       <div class="stamps">
         <div class="st on"><b>Planted</b><span id="ppDate"></span><span id="ppRow"></span></div>
         <div class="st"><b>Dipped</b><span>Matsunoyama Onsen<br>a 12 million year old sea</span></div>
-        <div class="st"><b>Hammered</b><span>Your copper cup<br>Tsubame, at harvest</span></div>
-        <div class="st lock"><b>Poured</b><div class="cd" id="ppDays"></div><span>days until February,<br>when your rice comes home as sake</span></div>
+        <div class="st"><b>Harvested</b><span>Your terrace<br>Matsudai, in the autumn</span></div>
+        <div class="st lock"><b>Poured</b><div class="cd" id="ppDays"></div><span>days until February,<br>when your bottle comes with your terrace on the label</span></div>
       </div>
       <p class="ppnote">One stamp today. The last one only arrives in February. <i>That is the reason to come back.</i></p>
     </div>
     <div class="after">
       <div class="sig">Niigata. <i>It grows on you.</i></div>
       <button id="savePP">Save my passport</button>
-      <br><a href="https://nishantkbakshi.github.io/snow-country-pass/">See the Niigata Field Share</a>
+      <br><a href="https://nishantkbakshi.github.io/snow-country-pass/">See Niigata Furusato</a>
     </div>
     <p class="fine">Matsudai terraces, Tokamachi, Niigata · 37.14° N 138.62° E<br>A student competition concept for the LBS Visit Japan Competition 2026. Your first name is shown on the shared screen only and is not stored by us.</p>
   </section>
@@ -258,14 +258,14 @@ function initPhone(){
   seed.addEventListener("pointerup",end);seed.addEventListener("pointercancel",end);
   document.getElementById("savePP").onclick=savePassport;
   function savePassport(){var W=1080,H=1500,c=document.createElement("canvas");c.width=W;c.height=H;var g=c.getContext("2d");
-    g.fillStyle="#F7F2E4";g.fillRect(0,0,W,H);g.fillStyle="#7A5A3A";g.font="700 30px sans-serif";g.fillText("FIELD PASSPORT · NIIGATA FIELD SHARE",80,120);
+    g.fillStyle="#F7F2E4";g.fillRect(0,0,W,H);g.fillStyle="#7A5A3A";g.font="700 30px sans-serif";g.fillText("FIELD PASSPORT · NIIGATA FURUSATO",80,120);
     g.fillStyle="#17241C";g.font="800 76px Georgia,serif";g.fillText("Grow your own Japan",80,220);
     g.font="36px sans-serif";g.fillStyle="#4B5A50";g.fillText((me.n?me.n+" · ":"")+"Matsudai, Niigata · 37.14° N 138.62° E",80,290);
-    var pos=[[300,560],[780,560],[300,1000],[780,1000]],lab=[["Planted",document.getElementById("ppDate").textContent,document.getElementById("ppRow").textContent],["Dipped","Matsunoyama Onsen",""],["Hammered","Tsubame copper cup",""],["Poured","February",document.getElementById("ppDays").textContent+" days to go"]];
+    var pos=[[300,560],[780,560],[300,1000],[780,1000]],lab=[["Planted",document.getElementById("ppDate").textContent,document.getElementById("ppRow").textContent],["Dipped","Matsunoyama Onsen",""],["Harvested","Matsudai, in the autumn",""],["Poured","February",document.getElementById("ppDays").textContent+" days to go"]];
     pos.forEach(function(p,i){g.save();g.translate(p[0],p[1]);if(i===0)g.rotate(-0.14);g.lineWidth=i===0?7:3;g.strokeStyle=i===0?"#C2412D":"rgba(23,36,28,.3)";if(i>0)g.setLineDash([12,10]);g.beginPath();g.arc(0,0,190,0,7);g.stroke();g.setLineDash([]);
       g.fillStyle=i===0?"#C2412D":"#17241C";g.textAlign="center";g.font="700 50px Georgia,serif";g.fillText(lab[i][0],0,-6);g.font="28px sans-serif";g.fillStyle=i===0?"#C2412D":"#5B6A60";g.fillText(lab[i][1],0,42);g.fillText(lab[i][2],0,80);g.restore()});
     g.fillStyle="#17241C";g.font="40px Georgia,serif";g.fillText("One stamp today. The last one arrives in February.",80,1330);g.fillStyle="#A4501C";g.fillText("Niigata. It grows on you.",80,1400);
-    c.toBlob(function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="Niigata_Field_Passport.png";document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},2000)},"image/png")}
+    c.toBlob(function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="Niigata_Furusato_Passport.png";document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},2000)},"image/png")}
 }
 
 /* ================= SCREEN ================= */
